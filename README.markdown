@@ -28,13 +28,13 @@ If we want
 Then we write something like the following:
 
      <%
-       var li_elems = from s in scoobies 
-                         select new Anchor () { Href = "/person/" + s.Key }.Wrap (s.Value)
-                           into a select new ListItem ().Wrap (a);
-
-       var ul = new UnorderedList ().Wrap (li_elems);
+       var ul_scoobs = from s in scoobies 
+                         select new Anchor () { Href = "/person/" + s.Key }
+								.Wrap (s.Value)
+								.WrapIn (new ListItem())
+								.WrapIn (new UnorderedList());
      %>
 
-    <%= ul %>
+    <%= ul_scoobs %>
 			
 This minimizes the interaction between server side code and markup.
