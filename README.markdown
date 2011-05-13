@@ -28,11 +28,13 @@ If we want
 Then we write something like the following:
 
      <%
-       var ul_scoobs = from s in scoobies 
+       var li_scoobs = from s in scoobies 
                          select new Anchor () { Href = "/person/" + s.Key }
 								.Wrap (s.Value)
-								.WrapIn (new ListItem())
-								.WrapIn (new UnorderedList());
+								.WrapIn (new ListItem());
+								
+		var ul_scoobs = new UnorderedList().Wrap(li_scoobs);
+								
      %>
 
     <%= ul_scoobs %>
