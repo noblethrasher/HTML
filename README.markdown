@@ -4,7 +4,7 @@ I always found the ASP.NET web controls to be too heavy while the MVC controls f
 ##Example Code##
    
 Suppose we had a structure like the following:
-   var scoobies = new Dictionary<int, string>
+       var scoobies = new Dictionary<int, string>
             {
                 {1, "Buffy Summers"},
                 {2, "Dawn Summers"},
