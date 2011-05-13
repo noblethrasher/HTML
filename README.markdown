@@ -25,14 +25,15 @@ If we want
 	</ul>
 
 Then we write something like the following:
-    <%
-    var li_elems = from s in scoobies 
+
+     <%
+       var li_elems = from s in scoobies 
                       select new Anchor () { Href = "/person/" + s.ID }.Wrap (s.Name)
                           into a
                             select new ListItem ().Wrap (a);
 
-    var ul = new UnorderedList ().Wrap (li_elems);
-    %>
+       var ul = new UnorderedList ().Wrap (li_elems);
+     %>
 
     <%= ul %>
 			
