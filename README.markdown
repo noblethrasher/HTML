@@ -19,9 +19,9 @@ Suppose we had a structure like the following:
 If we want
     
 	<ul>
-	   <li><a href="1">Buffy Summers</a></li>
-	   <li><a href="2">Dawn Summers</a></li>
-	   <li><a href="3">Xander Harris</a></li>
+	   <li><a href="/person/1">Buffy Summers</a></li>
+	   <li><a href="/person/2">Dawn Summers</a></li>
+	   <li><a href="/person/3">Xander Harris</a></li>
 	...
 	</ul>
 
@@ -29,9 +29,8 @@ Then we write something like the following:
 
      <%
        var li_elems = from s in scoobies 
-                      select new Anchor () { Href = "/person/" + s.ID }.Wrap (s.Name)
-                          into a
-                            select new ListItem ().Wrap (a);
+                         select new Anchor () { Href = "/person/" + s.Key }.Wrap (s.Value)
+                           into a select new ListItem ().Wrap (a);
 
        var ul = new UnorderedList ().Wrap (li_elems);
      %>
