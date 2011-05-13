@@ -19,9 +19,9 @@ Suppose we had a structure like the following:
 If we want
     
 	<ul>
-	<li><a href="1">Buffy Summers</a></li>
-	<li><a href="2">Dawn Summers</a></li>
-	<li><a href="1">Xander Harris</a></li>
+	   <li><a href="1">Buffy Summers</a></li>
+	   <li><a href="2">Dawn Summers</a></li>
+	   <li><a href="3">Xander Harris</a></li>
 	...
 	</ul>
 
