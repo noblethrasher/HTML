@@ -24,18 +24,6 @@ namespace HTML
             element.AddChild (new TextNode () { Text = child });
             return element;
         }
-
-        public static T WrapIn<T>(this Element elem, T parent) where T : Element
-        {
-            parent.AddChild (elem);
-            return parent;
-        }
-
-        public static T WrapIn<T>(this IEnumerable<Element> elems, T parent) where T : Element
-        {
-            parent.AddChildren (elems);
-            return parent;
-        }
     }
 
     public class HtmlAttribute
@@ -83,39 +71,9 @@ namespace HTML
 
     public sealed class Color : Style
     {
-        public Color(string Value) : base (Value) { }
-
-        public int CssColor { get; set; }
-        
         public override string Name
         {
             get { return "color"; }
-        }
-    }
-
-    public sealed class Border : Style
-    {
-        public override string Name
-        {
-            get { return "border"; }
-        }
-
-        public int BorderWidth
-        {
-            get;
-            set;
-        }
-
-        public string BorderStyle
-        {
-            get;
-            set;
-        }
-
-        public int BorderColor
-        {
-            get;
-            set;
         }
     }
 
@@ -124,17 +82,16 @@ namespace HTML
     {
 
         Guid _id = Guid.NewGuid ();
-
-        protected readonly string _name;
+        
+        protected abstract string _name { get; }
 
         protected List<HtmlAttribute> attrs = new List<HtmlAttribute> ();
         protected List<Element> children = new List<Element> ();
 
         HtmlAttribute elem_id = new HtmlAttribute ("id", "");
 
-        public Element(string name)
+        public Element()
         {
-            this._name = name;
             attrs.Add (elem_id);
         }
 
@@ -214,7 +171,7 @@ namespace HTML
 
                 foreach (var child in children)
                 {
-                    sb.AppendLine (child.ToString ());
+                    sb.Append (child.ToString ());
                 }
 
                 return startTag + ">" + sb.ToString () + "</" + _name + ">";
@@ -236,7 +193,7 @@ namespace HTML
 
         HtmlAttribute _href = new HtmlAttribute ("href", "");
         
-        public Anchor() : base("a")
+        public Anchor()
         {
             this.attrs.Add (_href);
         }
@@ -252,13 +209,23 @@ namespace HTML
             {
                 _href.Value = value;
             }
-        }       
+        }
+
+        protected override string _name
+        {
+            get { return "a"; }
+        }
     }
 
 
     public sealed class Image : Element
     {
-        public Image() : base("img")
+        protected override string _name
+        {
+            get { return "img"; }
+        }
+
+        public Image()
         {
             this.attrs.Add (_img);
         }
@@ -288,7 +255,10 @@ namespace HTML
 
     public sealed class Paragraph : Element
     {
-        public Paragraph() : base ("p") { }  
+        protected override string _name
+        {
+            get { return "p"; }
+        }       
     }
 
 
@@ -296,7 +266,10 @@ namespace HTML
     {
         public string Text { get; set; }
 
-        public TextNode() : base ("") { }
+        protected override string _name
+        {
+            get { return ""; }
+        }
 
 
         /// <summary>
@@ -367,19 +340,28 @@ namespace HTML
 
     public sealed class Table : Element
     {
-        public Table() : base ("table") { }
+        protected override string _name
+        {
+            get { return "table"; }
+        }
     }
 
     public sealed class TableRow : Element
     {
-        public TableRow() : base ("tr") { }
+        protected override string _name
+        {
+            get { return "tr"; }
+        }
     }
 
     public sealed class TableCell : Element
     {
-       private TableCell() : base ("td") { }
-        
-        public TableCell(string s) : this()
+        protected override string _name
+        {
+            get { return "td"; }
+        }
+
+        public TableCell(string s)
         {
             this.children.Add (new TextNode () { Text = s });
         }
@@ -387,16 +369,25 @@ namespace HTML
 
     public sealed class ListItem : Element
     {
-        public ListItem() : base ("li") { }        
+        protected override string _name
+        {
+            get { return "li"; }
+        }        
     }
 
     public sealed class UnorderedList : Element
     {
-        public UnorderedList() : base ("ul") { }
+        protected override string _name
+        {
+            get { return "ul"; }
+        }
     }
 
     public sealed class OrderedList : Element
     {
-        public OrderedList() : base ("ol") { }
+        protected override string _name
+        {
+            get { return "ol"; }
+        }
     }
 }
